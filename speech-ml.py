@@ -10,16 +10,16 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
 
 # Read the data from the CSV file
-df = pd.read_csv('data/synthetic_stutter_data.csv')
+df = pd.read_csv('data/synthetic_speech_defect_data.csv')
 
 # Strip any leading/trailing spaces in the column names (if any)
 df.columns = df.columns.str.strip()
 
 # Split the data into features (X) and target (y)
 X = df[['Jitter (%)', 'Shimmer (%)', 'WPM (Words per Minute)', 'Pauses (Duration in sec)']]
-y = df['Severity of Stutter']
+y = df['Severity of Defect']
 
-# Encode the target variable (Severity of Stutter)
+# Encode the target variable (Severity of Defect)
 label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(y)  # Convert to numeric labels
 
@@ -121,7 +121,7 @@ while True:
     predicted_label = label_encoder.inverse_transform([predicted_class])[0]
     
     # Display the result
-    print(f"Predicted Severity of Stutter: {predicted_label}")
+    print(f"Predicted Severity of Defect: {predicted_label}")
 
     # Ask if the user wants to make another prediction
     continue_input = input("\nDo you want to make another prediction? (y/n): ").lower()
