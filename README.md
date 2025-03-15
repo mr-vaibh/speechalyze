@@ -1,4 +1,4 @@
-# Speechalyze - Speech Defect Detection System
+# Speech Defect Detection System
 
 ## Overview
 
@@ -9,6 +9,78 @@ This project aims to detect speech defects in individuals based on various acous
 - **Speech Defect Classification**: Uses a machine learning model trained on synthetic data to classify speech defects into various categories: No Defect, Low Defect, Mild Defect, Medium Defect, High Defect, and Severe Defect.
 - **Model Training and Evaluation**: Implements multiple machine learning models (Logistic Regression, SVM, Decision Tree, Random Forest) and evaluates them using GridSearchCV to select the best model.
 - **Real-Time Prediction**: Allows the user to input features of their speech for real-time defect classification.
+
+## Structure
+
+The project is divided into three main Python scripts:
+
+1. **`speech-features.py`**:
+   - Responsible for recording and processing audio.
+   - Extracts acoustic features like jitter, shimmer, pitch, formants, syllable duration, etc.
+   - Uses libraries like `librosa`, `opensmile`, `parselmouth`, and `vosk` for feature extraction and speech-to-text.
+
+2. **`generate_speech_defect_data.py`**:
+   - Generates synthetic speech defect data with balanced categories.
+   - Saves the data to a CSV file (`synthetic_speech_defect_data.csv`) which is used for training the machine learning model.
+
+3. **`speech-ml.py`**:
+   - Handles the machine learning pipeline.
+   - Trains multiple classifiers on the generated data and evaluates them.
+   - Allows the user to make predictions on speech features and classify the severity of defects.
+
+## Setup and Installation
+
+### Prerequisites
+
+You need Python 3.7 or higher to run this project. Additionally, the following libraries must be installed:
+
+- `numpy`
+- `pandas`
+- `scikit-learn`
+- `librosa`
+- `nltk`
+- `sounddevice`
+- `soundfile`
+- `opensmile`
+- `parselmouth`
+- `pydub`
+- `vosk`
+
+You can install the required dependencies by running:
+
+```bash
+pip install numpy pandas scikit-learn librosa nltk sounddevice soundfile opensmile parselmouth pydub vosk
+```
+
+### Running the Project
+
+1. **Generate the Synthetic Speech Data**:
+   First, run the `generate_speech_defect_data.py` script to generate the synthetic dataset used for training.
+
+   ```bash
+   python generate_speech_defect_data.py
+   ```
+
+   This will generate a file called `synthetic_speech_defect_data.csv` in the `data` directory.
+
+2. **Train the Machine Learning Model**:
+   After generating the data, run the `speech-ml.py` script to train the machine learning model on the generated dataset.
+
+   ```bash
+   python speech-ml.py
+   ```
+
+   This will train several machine learning models, evaluate their accuracy, and display the results. It will also allow you to interact with the model and make predictions.
+
+3. **Audio Recording and Analysis**:
+   If you want to analyze your own speech, you can use the `speech-features.py` script. This script allows you to either load an MP3 file or record audio using your microphone. It will then extract the relevant features from the speech and display the results.
+
+   ```bash
+   python speech-features.py
+   ```
+
+   - **Option 1**: Load an MP3 file and analyze it.
+   - **Option 2**: Record audio from your microphone (default duration of 60 seconds).
 
 ## Input and Output
 
@@ -61,6 +133,13 @@ The system uses a classification approach to detect speech defects. It is traine
 - Random Forest Classifier
 
 The model that performs best in terms of accuracy is used for making real-time predictions on user-provided data.
+
+## How to Use
+
+1. Run the training script (`speech-ml.py`) to train the model.
+2. Once the model is trained, you can use the same script to make predictions based on user input:
+   - Enter features like jitter, shimmer, WPM, and pause duration when prompted.
+   - The system will predict the severity of the speech defect.
 
 ### Example:
 
