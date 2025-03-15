@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">Enter Speech Features</h2>
+    <form id="manualForm" class="space-y-3">
+        {% csrf_token %}
+        <input type="number" step="0.01" name="jitter" placeholder="Jitter" class="w-full p-2 border rounded" required>
+        <input type="number" step="0.01" name="shimmer" placeholder="Shimmer" class="w-full p-2 border rounded" required>
+        <input type="number" step="10" name="speech_rate" placeholder="Speech Rate" class="w-full p-2 border rounded" required>
+        <input type="number" step="1" name="pause" placeholder="Pause" class="w-full p-2 border rounded" required>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Predict</button>
+    </form>
+
+    <p id="predictionResult" class="mt-4 text-lg font-semibold text-center"></p>
+</div>
+
+<div class="max-w-md mt-4 mx-auto bg-white p-6 rounded-lg shadow-md">
+    <p class="text-center text-lg">--------- or ---------</p>
+    <!-- Upload Audio Button -->
+    <a href="{% url 'upload_audio' %}" class="w-full bg-yellow-600 text-white py-2 mt-3 rounded text-center block">Go to Upload Audio</a>
+</div>
+
+<script>
+$(document).ready(function() {
+    $("#manualForm").submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{% url 'manual_entry' %}",
+            type: "POST",
+            data: $(this).serialize(),
+            success: function(response) {
+                $("#predictionResult").text("Prediction: " + response.prediction);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
