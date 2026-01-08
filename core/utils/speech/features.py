@@ -12,7 +12,7 @@ from pydub import AudioSegment
 from pydub.silence import detect_nonsilent
 from nltk.tokenize import word_tokenize
 
-nltk.download("punkt")
+nltk.download("punkt_tab")
 
 # Constants
 SAMPLE_RATE = 22050
